@@ -55,13 +55,36 @@ function goTo(newX, newY){
   }
 }
 
+// set random colors:
+var rndColor = "black";
+function randomColor(){
+  var rndNum = Math.floor(Math.random() * 5+1);
+  switch(rndNum){
+    case 1:
+      rndColor = "black";
+      break;
+    case 2:
+      rndColor = "green";
+      break;
+    case 3:
+      rndColor = "yellow";
+      break;
+    case 4:
+      rndColor = "blue";
+      break;
+    case 5:
+      rndColor = "pink";
+      break;
+  }
+}
+
 function update(){
   window.requestAnimationFrame(update);
 
   ctx.clearRect(0, 0, 900, 500);
 
   // black square:
-  ctx.fillStyle = "black";
+  ctx.fillStyle = rndColor;
   ctx.beginPath();
   ctx.fillRect(xPos, yPos, width, height);
 
@@ -72,6 +95,9 @@ function update(){
     // change max and min size:
     max = Math.floor(Math.random() * 250);
     min = Math.floor(Math.random() * 250);
+
+    // change color:
+    randomColor();
 
     width++;
     height++

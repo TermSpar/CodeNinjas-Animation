@@ -1,0 +1,105 @@
+<html>
+<body>
+
+<style>
+
+canvas{
+  background: #eee;
+}
+
+</style>
+
+<canvas id="ctx" tabindex=0 width=900 height=500 style="border:1px solid #000000;"></canvas>
+
+<script>
+
+var canvas = document.getElementById("ctx");
+var ctx = canvas.getContext("2d");
+canvas.focus();
+
+// square position vars:
+var xPos = 415;
+var yPos = 230;
+
+var rndX = 100;
+var rndY = 20;
+
+// square size vars:
+var width = 50;
+var height = 50;
+
+var max = 100;
+var min = 50;
+var growing = true;
+
+function goTo(newX, newY){
+  // move xPos:
+  if(xPos < newX){
+    xPos++;
+  }
+  else if(xPos > newX){
+    xPos--;
+  }
+
+  // move yPos:
+  if(yPos < newY){
+    yPos++;
+  }
+  else if(yPos > newY){
+    yPos--;
+  }
+  // if square is in new location:
+  if(xPos == newX || yPos == newY){
+    // exit function:
+    return;
+  }
+}
+
+function update(){
+  window.requestAnimationFrame(update);
+
+  ctx.clearRect(0, 0, 900, 500);
+
+  // black square:
+  ctx.fillStyle = "black";
+  ctx.beginPath();
+  ctx.fillRect(xPos, yPos, width, height);
+
+  // continue to resize:
+  if(width < min){
+    growing = true;
+
+    // change max and min size:
+    max = Math.floor(Math.random() * 250);
+    min = Math.floor(Math.random() * 250);
+
+    width++;
+    height++
+  }
+  else if(width >= min && width < max && growing){
+    width++;
+    height++;
+  }
+  else if(width >= max || (width >= min && width < max && !growing)){
+    width--;
+    height--;
+    growing = false;
+  }
+
+  // move square to random location:
+  if(xPos != rndX && yPos != rndY){
+    goTo(rndX, rndY);
+  }
+  else if(xPos == rndX || yPos == rndY){
+    // generate new random position:
+    rndX = Math.floor(Math.random() * 900);
+    rndY = Math.floor(Math.random() * 500);
+  }
+}
+
+window.requestAnimationFrame(update);
+
+</script>
+
+</body>
+</html>
